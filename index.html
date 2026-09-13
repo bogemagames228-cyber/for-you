@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Для тебя 💗</title>
+<title>КИСИК, ПРОСТИ МЕНЯ</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   
@@ -27,6 +27,7 @@
     padding: 30px 22px;
     text-align: center;
     transition: opacity 0.9s ease, transform 0.9s ease;
+    overflow-y: auto;
   }
   .screen.hidden {
     opacity: 0;
@@ -75,24 +76,35 @@
     transition: transform 0.25s, box-shadow 0.25s;
     opacity: 0;
     animation: fadeIn 1.8s 1.5s forwards;
+    letter-spacing: 1px;
   }
   .btn:active {
     transform: scale(0.95);
     box-shadow: 0 5px 15px rgba(255,61,119,0.6);
   }
 
-  /* ---------- ЭКРАН ИЗВИНЕНИЙ ---------- */
-  #sorry h2 {
+  /* ---------- ЭКРАН ПИСЬМА ---------- */
+  #letter h2 {
     font-size: 1.5rem;
-    margin-bottom: 22px;
+    margin-bottom: 10px;
     color: #8a2b52;
+    letter-spacing: 2px;
+    font-weight: bold;
+  }
+  #letter .subtitle {
+    font-size: 0.85rem;
+    color: #a04a6b;
+    letter-spacing: 2px;
+    margin-bottom: 25px;
+    text-transform: uppercase;
   }
   .typing {
-    font-size: 1.1rem;
+    font-size: 1rem;
     line-height: 1.9;
     max-width: 500px;
-    min-height: 140px;
+    min-height: 200px;
     color: #7a3350;
+    text-align: left;
   }
   .cursor {
     display: inline-block;
@@ -104,68 +116,195 @@
     50% { opacity: 0; }
   }
 
-  /* ---------- ЭКРАН ОБЕЩАНИЙ ---------- */
-  #promise h2 {
-    font-size: 1.5rem;
-    margin-bottom: 25px;
+  /* ---------- ЭКРАН "ЧТО БУДЕМ ДЕЛАТЬ?" ---------- */
+  #action h2 {
+    font-size: 1.6rem;
+    margin-bottom: 35px;
     color: #8a2b52;
+    letter-spacing: 2px;
   }
-  .promise-item {
+  .action-option {
+    display: block;
+    width: 100%;
+    max-width: 380px;
+    padding: 18px 25px;
+    margin: 12px auto;
     font-size: 1.05rem;
-    line-height: 1.9;
-    margin: 8px 0;
-    opacity: 0;
-    animation: slideIn 1s forwards;
+    font-family: inherit;
+    background: #fff;
+    color: #8a2b52;
+    border: 2px solid #ffb3c9;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 5px 15px rgba(255,107,157,0.15);
   }
-  .promise-item:nth-child(2) { animation-delay: 0.3s; }
-  .promise-item:nth-child(3) { animation-delay: 0.6s; }
-  .promise-item:nth-child(4) { animation-delay: 0.9s; }
-  .promise-item:nth-child(5) { animation-delay: 1.2s; }
-  .promise-item:nth-child(6) { animation-delay: 1.5s; }
-  
-  @keyframes slideIn {
-    from { opacity: 0; transform: translateY(15px); }
-    to { opacity: 1; transform: translateY(0); }
+  .action-option:active {
+    background: #ff6b9d;
+    color: #fff;
+    transform: scale(0.97);
   }
 
-  /* ---------- ФИНАЛ ---------- */
-  #final h2 {
-    font-size: 1.7rem;
-    margin-bottom: 30px;
+  /* ---------- КАЛЕНДАРЬ ---------- */
+  #date h2 {
+    font-size: 1.6rem;
+    margin-bottom: 25px;
     color: #8a2b52;
-    line-height: 1.4;
+    letter-spacing: 2px;
   }
-  .final-buttons {
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    max-width: 400px;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .date-cell {
+    aspect-ratio: 1;
     display: flex;
-    gap: 15px;
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    margin-top: 10px;
-  }
-  #yesBtn {
-    padding: 16px 45px;
-    font-size: 1.2rem;
-    background: linear-gradient(135deg, #ff6b9d, #ff3d77);
-    color: #fff;
-    border: none;
-    border-radius: 40px;
-    box-shadow: 0 10px 25px rgba(255,61,119,0.45);
-    cursor: pointer;
-    transition: transform 0.3s;
-  }
-  #yesBtn:active { transform: scale(1.15); }
-  #noBtn {
-    padding: 16px 35px;
-    font-size: 1.1rem;
     background: #fff;
-    color: #a04a6b;
     border: 2px solid #ffb3c9;
-    border-radius: 40px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s;
+    padding: 5px;
+  }
+  .date-cell:active {
+    background: #ff6b9d;
+    color: #fff;
+    transform: scale(0.92);
+  }
+  .date-cell .day-num {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #8a2b52;
+  }
+  .date-cell .day-name {
+    font-size: 0.7rem;
+    color: #a04a6b;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .date-cell:active .day-num,
+  .date-cell:active .day-name {
+    color: #fff;
+  }
+
+  /* ---------- ВРЕМЯ ---------- */
+  #time h2 {
+    font-size: 1.6rem;
+    margin-bottom: 25px;
+    color: #8a2b52;
+    letter-spacing: 2px;
+  }
+  .time-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    max-width: 400px;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .time-cell {
+    padding: 14px 5px;
+    background: #fff;
+    border: 2px solid #ffb3c9;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    color: #8a2b52;
     cursor: pointer;
     transition: all 0.3s;
   }
+  .time-cell:active {
+    background: #ff6b9d;
+    color: #fff;
+    transform: scale(0.92);
+  }
 
-  /* ---------- СЕРДЕЧКИ ЛЕТЯТ ---------- */
+  /* ---------- ФИНАЛЬНЫЙ ЭКРАН ---------- */
+  #thanks h2 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #8a2b52;
+    line-height: 1.5;
+    letter-spacing: 1px;
+  }
+  #thanks .chosen-info {
+    font-size: 1.05rem;
+    color: #7a3350;
+    margin-bottom: 25px;
+    line-height: 1.7;
+  }
+  .date-box {
+    display: inline-block;
+    padding: 20px 35px;
+    margin: 20px auto;
+    background: #fff;
+    border: 3px solid #ff6b9d;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(255,107,157,0.35);
+    position: relative;
+  }
+  .date-box::before {
+    content: '💗';
+    position: absolute;
+    top: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #ffe0ec;
+    padding: 0 10px;
+    font-size: 1.5rem;
+  }
+  .date-box .date-big {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #ff3d77;
+    letter-spacing: 2px;
+  }
+  .date-box .time-big {
+    font-size: 1.1rem;
+    color: #8a2b52;
+    margin-top: 8px;
+    letter-spacing: 1px;
+  }
+  .photo-frame {
+    margin: 30px auto 10px;
+    max-width: 320px;
+    width: 100%;
+    padding: 12px;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(255,61,119,0.3);
+    transform: rotate(-2deg);
+    transition: transform 0.5s;
+    opacity: 0;
+    animation: fadeInPhoto 2s 1s forwards;
+  }
+  .photo-frame img {
+    width: 100%;
+    display: block;
+    border-radius: 12px;
+  }
+  @keyframes fadeInPhoto {
+    from { opacity: 0; transform: rotate(-2deg) translateY(20px); }
+    to { opacity: 1; transform: rotate(-2deg) translateY(0); }
+  }
+  .love-note {
+    margin-top: 25px;
+    font-size: 1.1rem;
+    color: #8a2b52;
+    letter-spacing: 1px;
+    font-style: italic;
+    opacity: 0;
+    animation: fadeIn 2s 2s forwards;
+  }
+
+  /* ---------- СЕРДЕЧКИ ---------- */
   .heart-float {
     position: fixed;
     font-size: 1.3rem;
@@ -184,22 +323,6 @@
   @keyframes fadeIn {
     to { opacity: 1; }
   }
-
-  /* ---------- СЧЁТЧИК ДНЕЙ ---------- */
-  .days-counter {
-    margin: 25px 0;
-    font-size: 1rem;
-    color: #a04a6b;
-    opacity: 0;
-    animation: fadeIn 1.5s 1.8s forwards;
-  }
-  .days-counter span {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #ff3d77;
-    display: block;
-    margin-top: 5px;
-  }
 </style>
 </head>
 <body>
@@ -209,36 +332,50 @@
   <div class="envelope">💌</div>
   <h1>У меня есть кое-что важное<br>сказать тебе...</h1>
   <p>Нажми на кнопку ниже 💗</p>
-  <button class="btn" onclick="goTo('sorry')">Открыть</button>
+  <button class="btn" onclick="goTo('letter')">Открыть</button>
 </div>
 
-<!-- ========== ЭКРАН 2: ИЗВИНЕНИЯ ========== -->
-<div class="screen hidden" id="sorry">
-  <h2>Прости меня, пожалуйста 💗</h2>
+<!-- ========== ЭКРАН 2: ПИСЬМО ========== -->
+<div class="screen hidden" id="letter">
+  <h2>КИСИК, ПРОСТИ МЕНЯ</h2>
+  <div class="subtitle">Я ДОЛГО СОБИРАЛАСЬ ЭТО НАПИСАТЬ</div>
   <p class="typing" id="typingText"></p>
-  <button class="btn" id="sorryNextBtn" style="opacity:0; display:none;" onclick="goTo('promise')">Дальше →</button>
+  <button class="btn" id="letterNextBtn" style="opacity:0; display:none;" onclick="goTo('action')">Дальше →</button>
 </div>
 
-<!-- ========== ЭКРАН 3: ОБЕЩАНИЯ ========== -->
-<div class="screen hidden" id="promise">
-  <h2>Я обещаю тебе 🌸</h2>
-  <div class="promise-item">✓ Слушать тебя</div>
-  <div class="promise-item">✓ Быть рядом</div>
-  <div class="promise-item">✓ Делать тебя счастливой</div>
-  <div class="promise-item">✓ Ценить каждый момент</div>
-  <div class="promise-item">✓ Стать лучше ради нас</div>
-  <div class="days-counter" id="daysCounter">Мы вместе уже:<span>0 дней</span></div>
-  <button class="btn" style="opacity:0; animation-delay:2.2s;" onclick="goTo('final')">Дальше →</button>
+<!-- ========== ЭКРАН 3: ЧТО БУДЕМ ДЕЛАТЬ? ========== -->
+<div class="screen hidden" id="action">
+  <h2>ЧТО БУДЕМ ДЕЛАТЬ?</h2>
+  <button class="action-option" onclick="chooseAction('Выслушаю тебя 💗')">1) Выслушаю тебя (всё в живую)</button>
+  <button class="action-option" onclick="chooseAction('Давай встретимся 💗')">2) Давай встретимся</button>
+  <button class="action-option" onclick="chooseAction('Дай мне время 💗')">3) Дай мне время</button>
+  <button class="action-option" onclick="chooseAction('Позвони мне 💗')">4) Позвони мне</button>
 </div>
 
-<!-- ========== ЭКРАН 4: ФИНАЛ ========== -->
-<div class="screen hidden" id="final">
-  <h2>Ты простишь меня? 💕</h2>
-  <div class="final-buttons">
-    <button id="yesBtn" onclick="yesClicked()">Да 💗</button>
-    <button id="noBtn" onmouseover="runAway(this)" ontouchstart="runAway(this)">Нет</button>
+<!-- ========== ЭКРАН 4: КОГДА? ========== -->
+<div class="screen hidden" id="date">
+  <h2>КОГДА?</h2>
+  <div class="calendar-grid" id="calendarGrid"></div>
+</div>
+
+<!-- ========== ЭКРАН 5: ВО СКОЛЬКО? ========== -->
+<div class="screen hidden" id="time">
+  <h2>ВО СКОЛЬКО?</h2>
+  <div class="time-grid" id="timeGrid"></div>
+</div>
+
+<!-- ========== ЭКРАН 6: СПАСИБО ========== -->
+<div class="screen hidden" id="thanks">
+  <h2 id="thanksTitle">Спасибо 💗</h2>
+  <p class="chosen-info" id="chosenInfo"></p>
+  <div class="date-box">
+    <div class="date-big" id="dateBig"></div>
+    <div class="time-big" id="timeBig"></div>
   </div>
-  <p id="finalMessage" style="margin-top:30px; font-size:1.2rem; color:#8a2b52; display:none;"></p>
+  <div class="photo-frame">
+    <img src="[url=https://ibb.co/DPbrc7d3][img]https://i.ibb.co/0pXs4f5P/IMG-1181.jpg[/img][/url]" alt="Мы">
+  </div>
+  <p class="love-note">Я тебя безумно люблю 💕</p>
 </div>
 
 <script>
@@ -247,12 +384,11 @@
     document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
     document.getElementById(id).classList.remove('hidden');
     
-    if (id === 'sorry') startTyping();
-    if (id === 'promise') updateDays();
+    if (id === 'letter') startTyping();
   }
 
-  // ---------- ПЕЧАТАЮЩИЙСЯ ТЕКСТ ----------
-  const fullText = "Я знаю, что был неправ(а)...\nИ мне очень жаль.\nТы — самое важное,\nчто у меня есть.\n\nПрости меня, пожалуйста. 💗";
+  // ---------- ПЕЧАТАЮЩИЙСЯ ТЕКСТ ПИСЬМА ----------
+  const fullText = "Я была не права. Не в мелочи, а в том, как с тобой обошлась. И поняла это не сразу, а когда стало поздно.\n\nРаньше мне казалось: промолчу и всё само уляжется. Не улеглось. Я оставляю тебя одну с тем, что натворила, и сделала тебе больно ещё раз.\n\nОправдываться не буду, мне нечем. Хочу только, чтобы ты знала: я всё поняла, и мне правда жаль.\n\nЯ тебя безумно люблю 💗";
   let charIndex = 0;
   let typingStarted = false;
 
@@ -260,13 +396,13 @@
     if (typingStarted) return;
     typingStarted = true;
     const el = document.getElementById('typingText');
-    const btn = document.getElementById('sorryNextBtn');
+    const btn = document.getElementById('letterNextBtn');
     
     function type() {
       if (charIndex < fullText.length) {
         el.innerHTML = fullText.slice(0, charIndex + 1).replace(/\n/g, '<br>') + '<span class="cursor">&nbsp;</span>';
         charIndex++;
-        setTimeout(type, 65);
+        setTimeout(type, 55);
       } else {
         el.innerHTML = fullText.replace(/\n/g, '<br>');
         btn.style.display = 'inline-block';
@@ -276,28 +412,70 @@
     type();
   }
 
-  // ---------- СЧЁТЧИК ДНЕЙ ВМЕСТЕ ----------
-  // ⚠️ ИЗМЕНИ ДАТУ НА ВАШУ (год, месяц-1, день)
-  // Например: 14 февраля 2024 = new Date(2024, 1, 14)
-  const startDate = new Date(2025, 7, 26); // ← поменяй!
-  
-  function updateDays() {
-    const now = new Date();
-    const diff = Math.floor((now - startDate) / (1000 * 60 * 60 * 24));
-    document.querySelector('#daysCounter span').textContent = diff + ' дней 💕';
+  // ---------- ВЫБОР ДЕЙСТВИЯ ----------
+  let chosenAction = '';
+  let chosenDate = '';
+  let chosenTime = '';
+
+  function chooseAction(action) {
+    chosenAction = action;
+    goTo('date');
   }
 
-  // ---------- УБЕГАЮЩАЯ КНОПКА "НЕТ" ----------
-  function runAway(btn) {
-    const x = (Math.random() - 0.5) * 200;
-    const y = (Math.random() - 0.5) * 200;
-    btn.style.transform = `translate(${x}px, ${y}px)`;
-  }
+  // ---------- КАЛЕНДАРЬ (14 сентября — 1 октября) ----------
+  const dayNames = ['вс','пн','вт','ср','чт','пт','сб'];
+  const monthNames = ['янв','фев','мар','апр','мая','июн','июл','авг','сен','окт','ноя','дек'];
 
-  // ---------- НАЖАТИЕ "ДА" ----------
-  function yesClicked() {
-    document.getElementById('finalMessage').style.display = 'block';
-    document.getElementById('finalMessage').innerHTML = 'Спасибо тебе 💗<br>Я тебя очень люблю.';
+  function buildCalendar() {
+    const grid = document.getElementById('calendarGrid');
+    grid.innerHTML = '';
+    
+    // 14 сентября 2025 → 1 октября 2025
+    const start = new Date(2025, 8, 14); // сентябрь = 8
+    const end = new Date(2025, 9, 1);    // октябрь = 9
+    
+    for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+      const day = d.getDate();
+      const monthShort = monthNames[d.getMonth()];
+      const dayName = dayNames[d.getDay()];
+      
+      const cell = document.createElement('button');
+      cell.className = 'date-cell';
+      cell.innerHTML = `<div class="day-num">${day}</div><div class="day-name">${monthShort}, ${dayName}</div>`;
+      cell.onclick = () => {
+        chosenDate = `${day} ${monthShort}`;
+        goTo('time');
+      };
+      grid.appendChild(cell);
+    }
+  }
+  buildCalendar();
+
+  // ---------- ВРЕМЯ (0:00 — 23:00) ----------
+  function buildTime() {
+    const grid = document.getElementById('timeGrid');
+    grid.innerHTML = '';
+    for (let h = 0; h < 24; h++) {
+      const cell = document.createElement('button');
+      cell.className = 'time-cell';
+      cell.textContent = h + ':00';
+      cell.onclick = () => {
+        chosenTime = h + ':00';
+        showThanks();
+      };
+      grid.appendChild(cell);
+    }
+  }
+  buildTime();
+
+  // ---------- ФИНАЛЬНЫЙ ЭКРАН ----------
+  function showThanks() {
+    goTo('thanks');
+    document.getElementById('thanksTitle').innerHTML = 'Спасибо, что выбрала 💗';
+    document.getElementById('chosenInfo').innerHTML = `Ты выбрала:<br><b>${chosenAction}</b>`;
+    document.getElementById('dateBig').textContent = chosenDate;
+    document.getElementById('timeBig').textContent = 'в ' + chosenTime;
+    
     // Салют из сердечек
     for (let i = 0; i < 30; i++) setTimeout(createHeart, i * 80);
   }
