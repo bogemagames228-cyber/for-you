@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Для тебя 💗</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  
+  html, body {
+    font-family: 'Georgia', serif;
+    background: linear-gradient(160deg, #ffe0ec 0%, #ffc2d6 50%, #ffb3c9 100%);
+    min-height: 100vh;
+    color: #6b2d4a;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---------- ЭКРАНЫ ---------- */
+  .screen {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 22px;
+    text-align: center;
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+  .screen.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(1.05);
+  }
+
+  /* ---------- ЗАСТАВКА ---------- */
+  #intro .envelope {
+    font-size: 90px;
+    animation: pulse 2s ease-in-out infinite;
+    margin-bottom: 25px;
+    filter: drop-shadow(0 10px 20px rgba(255,107,157,0.5));
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1) rotate(-3deg); }
+    50% { transform: scale(1.15) rotate(3deg); }
+  }
+  #intro h1 {
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+    color: #8a2b52;
+    opacity: 0;
+    animation: fadeIn 1.8s 0.3s forwards;
+  }
+  #intro p {
+    font-size: 1rem;
+    color: #a04a6b;
+    margin-bottom: 35px;
+    opacity: 0;
+    animation: fadeIn 1.8s 0.9s forwards;
+  }
+
+  /* ---------- КНОПКИ ---------- */
+  .btn {
+    display: inline-block;
+    padding: 16px 42px;
+    font-size: 1.05rem;
+    font-family: inherit;
+    background: linear-gradient(135deg, #ff6b9d, #ff3d77);
+    color: #fff;
+    border: none;
+    border-radius: 40px;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(255,61,119,0.45);
+    transition: transform 0.25s, box-shadow 0.25s;
+    opacity: 0;
+    animation: fadeIn 1.8s 1.5s forwards;
+  }
+  .btn:active {
+    transform: scale(0.95);
+    box-shadow: 0 5px 15px rgba(255,61,119,0.6);
+  }
+
+  /* ---------- ЭКРАН ИЗВИНЕНИЙ ---------- */
+  #sorry h2 {
+    font-size: 1.5rem;
+    margin-bottom: 22px;
+    color: #8a2b52;
+  }
+  .typing {
+    font-size: 1.1rem;
+    line-height: 1.9;
+    max-width: 500px;
+    min-height: 140px;
+    color: #7a3350;
+  }
+  .cursor {
+    display: inline-block;
+    width: 2px;
+    background: #ff3d77;
+    animation: blink 0.7s infinite;
+  }
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+
+  /* ---------- ЭКРАН ОБЕЩАНИЙ ---------- */
+  #promise h2 {
+    font-size: 1.5rem;
+    margin-bottom: 25px;
+    color: #8a2b52;
+  }
+  .promise-item {
+    font-size: 1.05rem;
+    line-height: 1.9;
+    margin: 8px 0;
+    opacity: 0;
+    animation: slideIn 1s forwards;
+  }
+  .promise-item:nth-child(2) { animation-delay: 0.3s; }
+  .promise-item:nth-child(3) { animation-delay: 0.6s; }
+  .promise-item:nth-child(4) { animation-delay: 0.9s; }
+  .promise-item:nth-child(5) { animation-delay: 1.2s; }
+  .promise-item:nth-child(6) { animation-delay: 1.5s; }
+  
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ---------- ФИНАЛ ---------- */
+  #final h2 {
+    font-size: 1.7rem;
+    margin-bottom: 30px;
+    color: #8a2b52;
+    line-height: 1.4;
+  }
+  .final-buttons {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  #yesBtn {
+    padding: 16px 45px;
+    font-size: 1.2rem;
+    background: linear-gradient(135deg, #ff6b9d, #ff3d77);
+    color: #fff;
+    border: none;
+    border-radius: 40px;
+    box-shadow: 0 10px 25px rgba(255,61,119,0.45);
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+  #yesBtn:active { transform: scale(1.15); }
+  #noBtn {
+    padding: 16px 35px;
+    font-size: 1.1rem;
+    background: #fff;
+    color: #a04a6b;
+    border: 2px solid #ffb3c9;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  /* ---------- СЕРДЕЧКИ ЛЕТЯТ ---------- */
+  .heart-float {
+    position: fixed;
+    font-size: 1.3rem;
+    animation: floatUp linear infinite;
+    pointer-events: none;
+    opacity: 0.7;
+    z-index: 1;
+  }
+  @keyframes floatUp {
+    0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+    10% { opacity: 0.85; }
+    90% { opacity: 0.85; }
+    100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+  }
+
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+
+  /* ---------- СЧЁТЧИК ДНЕЙ ---------- */
+  .days-counter {
+    margin: 25px 0;
+    font-size: 1rem;
+    color: #a04a6b;
+    opacity: 0;
+    animation: fadeIn 1.5s 1.8s forwards;
+  }
+  .days-counter span {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #ff3d77;
+    display: block;
+    margin-top: 5px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ========== ЭКРАН 1: ЗАСТАВКА ========== -->
+<div class="screen" id="intro">
+  <div class="envelope">💌</div>
+  <h1>У меня есть кое-что важное<br>сказать тебе...</h1>
+  <p>Нажми на кнопку ниже 💗</p>
+  <button class="btn" onclick="goTo('sorry')">Открыть</button>
+</div>
+
+<!-- ========== ЭКРАН 2: ИЗВИНЕНИЯ ========== -->
+<div class="screen hidden" id="sorry">
+  <h2>Прости меня, пожалуйста 💗</h2>
+  <p class="typing" id="typingText"></p>
+  <button class="btn" id="sorryNextBtn" style="opacity:0; display:none;" onclick="goTo('promise')">Дальше →</button>
+</div>
+
+<!-- ========== ЭКРАН 3: ОБЕЩАНИЯ ========== -->
+<div class="screen hidden" id="promise">
+  <h2>Я обещаю тебе 🌸</h2>
+  <div class="promise-item">✓ Слушать тебя</div>
+  <div class="promise-item">✓ Быть рядом</div>
+  <div class="promise-item">✓ Делать тебя счастливой</div>
+  <div class="promise-item">✓ Ценить каждый момент</div>
+  <div class="promise-item">✓ Стать лучше ради нас</div>
+  <div class="days-counter" id="daysCounter">Мы вместе уже:<span>0 дней</span></div>
+  <button class="btn" style="opacity:0; animation-delay:2.2s;" onclick="goTo('final')">Дальше →</button>
+</div>
+
+<!-- ========== ЭКРАН 4: ФИНАЛ ========== -->
+<div class="screen hidden" id="final">
+  <h2>Ты простишь меня? 💕</h2>
+  <div class="final-buttons">
+    <button id="yesBtn" onclick="yesClicked()">Да 💗</button>
+    <button id="noBtn" onmouseover="runAway(this)" ontouchstart="runAway(this)">Нет</button>
+  </div>
+  <p id="finalMessage" style="margin-top:30px; font-size:1.2rem; color:#8a2b52; display:none;"></p>
+</div>
+
+<script>
+  // ---------- ПЕРЕКЛЮЧЕНИЕ ЭКРАНОВ ----------
+  function goTo(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
+    document.getElementById(id).classList.remove('hidden');
+    
+    if (id === 'sorry') startTyping();
+    if (id === 'promise') updateDays();
+  }
+
+  // ---------- ПЕЧАТАЮЩИЙСЯ ТЕКСТ ----------
+  const fullText = "Я знаю, что был неправ(а)...\nИ мне очень жаль.\nТы — самое важное,\nчто у меня есть.\n\nПрости меня, пожалуйста. 💗";
+  let charIndex = 0;
+  let typingStarted = false;
+
+  function startTyping() {
+    if (typingStarted) return;
+    typingStarted = true;
+    const el = document.getElementById('typingText');
+    const btn = document.getElementById('sorryNextBtn');
+    
+    function type() {
+      if (charIndex < fullText.length) {
+        el.innerHTML = fullText.slice(0, charIndex + 1).replace(/\n/g, '<br>') + '<span class="cursor">&nbsp;</span>';
+        charIndex++;
+        setTimeout(type, 65);
+      } else {
+        el.innerHTML = fullText.replace(/\n/g, '<br>');
+        btn.style.display = 'inline-block';
+        btn.style.animation = 'fadeIn 1s forwards';
+      }
+    }
+    type();
+  }
+
+  // ---------- СЧЁТЧИК ДНЕЙ ВМЕСТЕ ----------
+  // ⚠️ ИЗМЕНИ ДАТУ НА ВАШУ (год, месяц-1, день)
+  // Например: 14 февраля 2024 = new Date(2024, 1, 14)
+  const startDate = new Date(2025, 7, 26); // ← поменяй!
+  
+  function updateDays() {
+    const now = new Date();
+    const diff = Math.floor((now - startDate) / (1000 * 60 * 60 * 24));
+    document.querySelector('#daysCounter span').textContent = diff + ' дней 💕';
+  }
+
+  // ---------- УБЕГАЮЩАЯ КНОПКА "НЕТ" ----------
+  function runAway(btn) {
+    const x = (Math.random() - 0.5) * 200;
+    const y = (Math.random() - 0.5) * 200;
+    btn.style.transform = `translate(${x}px, ${y}px)`;
+  }
+
+  // ---------- НАЖАТИЕ "ДА" ----------
+  function yesClicked() {
+    document.getElementById('finalMessage').style.display = 'block';
+    document.getElementById('finalMessage').innerHTML = 'Спасибо тебе 💗<br>Я тебя очень люблю.';
+    // Салют из сердечек
+    for (let i = 0; i < 30; i++) setTimeout(createHeart, i * 80);
+  }
+
+  // ---------- ПАДАЮЩИЕ СЕРДЕЧКИ ----------
+  const emojis = ['💗','💖','💕','🌸','✨','💞'];
+  function createHeart() {
+    const heart = document.createElement('div');
+    heart.className = 'heart-float';
+    heart.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.animationDuration = (5 + Math.random() * 5) + 's';
+    heart.style.fontSize = (1 + Math.random() * 1.5) + 'rem';
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 11000);
+  }
+  
+  setInterval(createHeart, 900);
+  for (let i = 0; i < 5; i++) setTimeout(createHeart, i * 300);
+</script>
+
+</body>
+</html>
